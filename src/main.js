@@ -1,84 +1,77 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d", { alpha: false });
+var input = new Input(canvas);
 
-///////////////////////
-// INPUT
-///////////////////////
-var input = { x: 0, y: 0, touchActive: false}
-canvas.addEventListener("mousedown", e => { input.touchActive = true }, false);
-canvas.addEventListener("mouseup", e => { input.touchActive = false }, false);
-canvas.addEventListener("mousemove", e => { SetInputPos(e); e.preventDefault(); }, false );
-canvas.addEventListener("touchstart", e => { SetInputPos(e.touches[0]); input.touchActive = true; e.preventDefault(); }, false );
-canvas.addEventListener("touchend", e => { input.touchActive = false; e.preventDefault(); }, false );
-canvas.addEventListener("touchcancel", e => { input.touchActive = false; e.preventDefault(); }, false );
-canvas.addEventListener("touchmove", e => { SetInputPos(e.touches[0]); e.preventDefault(); }, false );
+var points = new Array();
+var movePoint = undefined;
+var maxPointTouchDistSq = 50*50;
 
-function SetInputPos(event)
-{
-    input.x = event.pageX - canvas.offsetLeft;
-    input.y = event.pageY - canvas.offsetTop;
-}
-
-//document.getElementById("heightSlider").oninput = () => { heightMult = 2.0 - parseFloat(document.getElementById("heightSlider").value); }
-//document.getElementById("windSlider").oninput = () => { windMult = parseFloat(document.getElementById("windSlider").value); }
-
-var va = {x: 50, y: 50};
-var vb = {x: 750, y: 50};
-var vc = {x: 750, y: 550};
+var lerpValue = 1.0;
+document.getElementById("lerpSlider").oninput = () => { lerpValue = parseFloat(document.getElementById("lerpSlider").value); }
 
 function Init()
 {
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = "#FFFFFF";
+    InitRender();
+    InitBezierQuad();
+    window.requestAnimationFrame(GameLoop);
+}
+
+function InitBezierQuad()
+{
+    points = new Array();
+    points.push(new ControlPoint(50, 50));
+    points.push(new ControlPoint(750, 50));
+    points.push(new ControlPoint(750, 550));
+    movePoint = undefined;
+}
+
+function InitBezierCubic()
+{
+    points = new Array();
+    points.push(new ControlPoint(50, 50));
+    points.push(new ControlPoint(550, 50));
+    points.push(new ControlPoint(750, 200));
+    points.push(new ControlPoint(750, 550));
+    movePoint = undefined;
 }
 
 function GameLoop()
 {
-    if (input !== undefined && input.touchActive)
-    {
-        vb.x = input.x;
-        vb.y = input.y;
-    }
+    Update();
+    Render();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = "#FF0000";
-    ctx.beginPath();
-    ctx.moveTo(va.x, va.y);
-    ctx.lineTo(vb.x, vb.y);
-    ctx.stroke();
-
-    ctx.strokeStyle = "#0000FF";
-    ctx.beginPath();
-    ctx.moveTo(vb.x, vb.y);
-    ctx.lineTo(vc.x, vc.y);
-    ctx.stroke();
-
-    ctx.strokeStyle = "#00FF00"
-    ctx.beginPath();
-    ctx.moveTo(va.x, va.y);
-
-    let numSegs = 1000;
-    for (let i = 0; i <= numSegs; i++)
-    {
-        let t = i / numSegs;
-        let pab = GetLerpPoint(va, vb, t);
-        let pbc = GetLerpPoint(vb, vc, t);
-        let p = GetLerpPoint(pab, pbc, t);
-        ctx.lineTo(p.x, p.y);
-    }
-
-    ctx.stroke();
-
+    input.PostUpdate();
     window.requestAnimationFrame(GameLoop);
 }
 
-function GetLerpPoint(v1, v2, t)
+function Update()
 {
-    t = Math.max(Math.min(t, 1.0), 0.0);
-    let s = 1.0 - t;
-    return {x: v1.x*s + v2.x*t, y: v1.y*s + v2.y*t}
+    if (input.isNewTouch)
+    {
+        let closestPointIdx = GetClosestPointIdx(input, points, maxPointTouchDistSq);
+        if (closestPointIdx !== -1)
+        {
+            movePoint = points[closestPointIdx];
+        }
+    }
+    
+    if (input.isTouchActive && movePoint !== undefined)
+    {
+        movePoint.x = input.x;
+        movePoint.y = input.y;
+    }
+    else
+    {
+        movePoint = undefined;
+    }
+}
+
+function Render()
+{
+    ctx.fillStyle = "#888";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    points.length === 4 ? RenderSceneBezierCubic() : RenderSceneBezierQuad();
 }
 
 Init();
-window.requestAnimationFrame(GameLoop);

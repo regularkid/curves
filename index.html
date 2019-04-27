@@ -77,12 +77,19 @@
                 <h1>Curves</h1>
                 <h4>Apr. 18th, 2019</h4>
                 <div id="game"></div>
-                <canvas id="canvas" width="800" height="600" style="width:800px; height:600px; background-color:black"></canvas>
+                <canvas id="canvas" width="800" height="600" style="width:800px; height:600px; background-color:#AAA"></canvas>
                 <br/><br/>
 
-                <input type="range" id="lerpSlider" name="lerpSlider" value="1.0" min="0.0" max="1.45" step="0.05" class="slider">
+                <input type="range" id="lerpSlider" name="lerpSlider" value="1.0" min="0.0" max="1.0" step="0.01" class="slider">
                 <label for="lerpSlider">Lerp Amount (time)</label><br/><br/>
 
+                <button class="button" onclick="InitBezierQuad()">Quadratic</button>
+                <button class="button" onclick="InitBezierCubic()">Cubic</button>
+
+                <script src="src/math.js"></script>
+                <script src="src/controlPoint.js"></script>
+                <script src="src/input.js"></script>
+                <script src="src/render.js"></script>
                 <script src="src/main.js"></script>
             </center>
 
