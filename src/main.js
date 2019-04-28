@@ -74,7 +74,11 @@ function Update()
         if (lerpValue < 0.0) { lerpValue = 0.0; animPingForward = true; }
     }
     getElem("lerpSlider").value = lerpValue.toString();
-    getElem("lerpSliderLabel").innerHTML = `Lerp Amount (t = ${Math.round(lerpValue.toString() * 100.0) / 100.0})`;
+
+    let lerpDisplay = (Math.round(lerpValue.toString() * 100.0) / 100.0).toString();
+    if (lerpDisplay.length === 3) { lerpDisplay += "0"; }
+    if (lerpDisplay.length === 1) { lerpDisplay += ".00"; }
+    getElem("lerpSliderLabel").innerHTML = `Lerp Amount (t = ${lerpDisplay})`;
 }
 
 function Render()
