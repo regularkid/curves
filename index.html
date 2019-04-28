@@ -75,7 +75,7 @@
         <div id="content">
             <center>
                 <h1>Curves</h1>
-                <h4>Apr. 18th, 2019</h4>
+                <h4>Apr. 28th, 2019</h4>
                 <div id="game"></div>
                 <canvas id="canvas" width="800" height="600" style="width:800px; height:600px; background-color:#AAA"></canvas>
                 <br/><br/>
@@ -84,7 +84,8 @@
                 <label for="lerpSlider">Lerp Amount (time)</label><br/><br/>
 
                 <button class="button" onclick="InitBezierQuad()">Quadratic</button>
-                <button class="button" onclick="InitBezierCubic()">Cubic</button>
+                <button class="button" onclick="InitBezierCubic()">Cubic</button><br/><br/>
+                <button class="button" onclick="ToggleAnimMode()" id="animButton">Anim Mode: Loop</button>
 
                 <script src="src/math.js"></script>
                 <script src="src/controlPoint.js"></script>
@@ -99,13 +100,21 @@
             <div id="info">
                 <br/>
                 <b>What Is This?</b><br/>
-                --<br/><br/>
+                A super cool way to visualize the math behind bezier curves as described in this wonderful GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>. The formula for bezier curves (<a herf="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Quadratic_B%C3%A9zier_curves">here</a>) can be derived by thinking about it as a series of lerps. Check it out:<br/><br/>
+                Let's say you want to find a point on the curve at some 0-1 value t. Here's how you would do that for quadratic bezier curves:<br/>
+                1. Find the lerp using t on the line between p1 and p2 (red line).<br/>
+                2. Find the lerp using t on the line between p2 and p3 (blue line).<br/>
+                3. Find the lerp using t on the line between the two points we calculated in steps 1 and 2 (yellow line). That's the point on the curve at t!<br/><br/>
+
+                Pretty neat, huh?! Very simple and easy to visualize!<br/><br/>
+
+                In the real world you wouldn't want to always be doing those lerps, but this helps us make sense of what's going on.
 
                 <b>How Long Did It Take?</b><br/>
-                --<br/><br/>
+                A couple of days.<br/><br/>
 
                 <b>How Many Lines of Code?</b><br/>
-                --<br/><br/>
+                267<br/><br/>
             </div>
 
             <script src="/footer.js"></script>
