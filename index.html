@@ -67,21 +67,21 @@
                 opacity: 1;
             }
         </style>
-        <title>Super Micro Fun - Curves</title>
+        <title>Super Micro Fun - Visualizing Bézier Curves</title>
     </head>
     <body>
         <script src="/header.js"></script>
 
         <div id="content">
             <center>
-                <h1>Curves</h1>
+                <h1>Visualizing Bézier Curves</h1>
                 <h4>Apr. 28th, 2019</h4>
                 <div id="game"></div>
                 <canvas id="canvas" width="800" height="600" style="width:800px; height:600px; background-color:#AAA"></canvas>
                 <br/><br/>
 
                 <input type="range" id="lerpSlider" name="lerpSlider" value="1.0" min="0.0" max="1.0" step="0.01" class="slider">
-                <label for="lerpSlider">Lerp Amount (time)</label><br/><br/>
+                <label for="lerpSlider">Lerp Amount (t)</label><br/><br/>
 
                 <button class="button" onclick="InitBezierQuad()">Quadratic</button>
                 <button class="button" onclick="InitBezierCubic()">Cubic</button><br/><br/>
@@ -100,7 +100,7 @@
             <div id="info">
                 <br/>
                 <b>What Is This?</b><br/>
-                A demo on how to visualize the math behind Bézier curves, as shown in this awesome GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>. Bézier curves can be thought of as just a series of lerps! Check it out:<br/><br/>
+                A demo showing how to visualize the math behind Bézier curves, as described in this awesome GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>. Bézier curves can be thought of as just a series of lerps! Check it out:<br/><br/>
                 Let's say you want to find a point on the curve at some 0-1 value t. Here's how you would do that for a quadratic Bézier:<br/>
                 <ol>
                     <li>Find the lerp point using t on the line between p0 and p1 (red line).</li>

@@ -1,2 +1,2 @@
 # curves
-A demo on how to visualize the math behind Bézier curves, as shown in this awesome GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>.
+A demo showing how to visualize the math behind Bézier curves, as described in this awesome GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>.
