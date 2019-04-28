@@ -100,15 +100,33 @@
             <div id="info">
                 <br/>
                 <b>What Is This?</b><br/>
-                A super cool way to visualize the math behind bezier curves as described in this wonderful GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>. The formula for bezier curves (<a herf="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#Quadratic_B%C3%A9zier_curves">here</a>) can be derived by thinking about it as a series of lerps. Check it out:<br/><br/>
-                Let's say you want to find a point on the curve at some 0-1 value t. Here's how you would do that for quadratic bezier curves:<br/>
-                1. Find the lerp using t on the line between p1 and p2 (red line).<br/>
-                2. Find the lerp using t on the line between p2 and p3 (blue line).<br/>
-                3. Find the lerp using t on the line between the two points we calculated in steps 1 and 2 (yellow line). That's the point on the curve at t!<br/><br/>
+                A demo on how to visualize the math behind Bézier curves, as shown in this awesome GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>. Bézier curves can be thought of as just a series of lerps! Check it out:<br/><br/>
+                Let's say you want to find a point on the curve at some 0-1 value t. Here's how you would do that for a quadratic Bézier:<br/>
+                <ol>
+                    <li>Find the lerp point using t on the line between p0 and p1 (red line).</li>
+                    <li>Find the lerp point using t on the line between p1 and p2 (blue line).</li>
+                    <li>Find the lerp point using t on the line between the two points we calculated in steps 1 and 2 (yellow line). That's the point on the curve at t!</li><br/>
+                </ol>
 
-                Pretty neat, huh?! Very simple and easy to visualize!<br/><br/>
+                Pretty neat, huh?! For me, this makes it very simple and easy to visualize!<br/><br/>
+                
+                You can also simplify the lerps to get the standard equation: <b>(1 - t)^2*p0 + 2(1 - t)*t*p1 + t^2*p2</b>. Here's how:</br></br>
 
-                In the real world you wouldn't want to always be doing those lerps, but this helps us make sense of what's going on.
+                <ol>
+                <li>A lerp using t between two points p0 and p1 can be represented as: (1 - t)*p0 + t*p1</li>
+                <li>Plug that in for steps 1 and 2 above (we'll call these points p3 and p4):<br/><br/>
+                p3 = (1 - t)*p0 + t*p1<br/>
+                p4 = (1 - t)*p1 + t*p2</li><br/>
+                <li>To find the point on the curve we need to lerp between p3 and p4 (step 3 above - we'll call this p5):<br/><br/>
+                p5 = (1 - t)*p3 + t*p4</li><br/>
+                <li>Now, let's plug in the values of p3 and p4 and simplify:<br/><br/>
+                p5 = (1 - t)*((1 - t)*p0 + t*p1) + t*((1 - t)*p1 + t*p2)<br/>
+                p5 = (1 - t)*(1 - t)*p0 + (1 - t)*t*p1 + t*(1 - t)*p1 + t*t*p2<br/>
+                <b>p5 = (1 - t)^2*p0 + 2*(1 - t)*t*p1 + t^2*p2</b></li>
+                </ol><br/>
+
+                <b>Easing?</b><br/>
+                You can also create easing functions by playing with the control points! Try this with a cubic Bézier: Move the control points to the end points (p0=p1 and p2=p3). Or try reversing that (p0=p2 and p1=p3).<br/><br/>
 
                 <b>How Long Did It Take?</b><br/>
                 A couple of days.<br/><br/>
