@@ -1,2 +1,2 @@
 # curves
-Tech demo / intuition for understanding bezier curves and splines!
+A demo on how to visualize the math behind Bézier curves, as shown in this awesome GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>.
