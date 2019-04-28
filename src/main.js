@@ -74,6 +74,7 @@ function Update()
         if (lerpValue < 0.0) { lerpValue = 0.0; animPingForward = true; }
     }
     getElem("lerpSlider").value = lerpValue.toString();
+    getElem("lerpSliderLabel").innerHTML = `Lerp Amount (t = ${Math.round(lerpValue.toString() * 100.0) / 100.0})`;
 }
 
 function Render()

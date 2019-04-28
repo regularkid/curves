@@ -81,7 +81,7 @@
                 <br/><br/>
 
                 <input type="range" id="lerpSlider" name="lerpSlider" value="1.0" min="0.0" max="1.0" step="0.01" class="slider">
-                <label for="lerpSlider">Lerp Amount (t)</label><br/><br/>
+                <label for="lerpSlider" id="lerpSliderLabel">Lerp Amount (t = 0.0)</label><br/><br/>
 
                 <button class="button" onclick="InitBezierQuad()">Quadratic</button>
                 <button class="button" onclick="InitBezierCubic()">Cubic</button><br/><br/>
@@ -101,7 +101,7 @@
                 <br/>
                 <b>What Is This?</b><br/>
                 A demo showing how to visualize the math behind Bézier curves, as described in this awesome GDC talk by Squirrel Eiserloh: <a href="https://schedule.gdconf.com/session/math-for-game-developers-curves-revisited/865184">Math for Game Developers: Curves Revisited</a>. Bézier curves can be thought of as just a series of lerps! Check it out:<br/><br/>
-                Let's say you want to find a point on the curve at some 0-1 value t. Here's how you would do that for a quadratic Bézier:<br/>
+                Let's say you want to find a point on the curve at some value t (0.0 - 1.0 where 0.0 = 0% through the curve, 1.0 = 100% through the curve). Here's how you would do that for a quadratic Bézier:<br/>
                 <ol>
                     <li>Find the lerp point using t on the line between p0 and p1 (red line).</li>
                     <li>Find the lerp point using t on the line between p1 and p2 (blue line).</li>
@@ -123,7 +123,9 @@
                 p5 = (1 - t)*((1 - t)*p0 + t*p1) + t*((1 - t)*p1 + t*p2)<br/>
                 p5 = (1 - t)*(1 - t)*p0 + (1 - t)*t*p1 + t*(1 - t)*p1 + t*t*p2<br/>
                 <b>p5 = (1 - t)^2*p0 + 2*(1 - t)*t*p1 + t^2*p2</b></li>
-                </ol><br/>
+                </ol><br/><br/>
+
+                <i>(The same logic applied here can also be used for cubic Bézier curves... just with one extra layer of lerps)</i><br/><br/>
 
                 <b>Easing?</b><br/>
                 You can also create easing functions by playing with the control points! Try this with a cubic Bézier: Move the control points to the end points (p0=p1 and p2=p3). Or try reversing that (p0=p2 and p1=p3).<br/><br/>
